@@ -1,66 +1,184 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel API CRUD with Passport 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project encompasses a demonstration of a Laravel API CRUD application integrated with Passport authentication, showcasing distinct user roles of User and Admin.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+These instructions will help you set up and run the project locally on your machine.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP >= 8
+- Composer (https://getcomposer.org/download/)
+- MySQL
+- Web server (e.g., Apache, Nginx)
 
-## Learning Laravel
+### Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```bash
+   git clone https://github.com/SanketAmin/Laravel_API_CRUD.git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Navigate to the project directory:
 
-## Laravel Sponsors
+   ```bash
+    cd project-name
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. Install the project dependencies:
 
-### Premium Partners
+    ```bash
+    composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+4. Create a copy of the .env.example file and rename it to .env:
 
-## Contributing
+    ```bash
+    cp .env.example .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Configure the .env file with your database and other environment settings.
 
-## Code of Conduct
+6. Generate the application key:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    php artisan key:generate
 
-## Security Vulnerabilities
+7. Run the database migrations and seeders:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    php artisan migrate --seed
 
-## License
+8. Start the development server:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan serve
+
+### Setting up Laravel Passport (https://laravel.com/docs/10.x/passport)
+
+1. Install Laravel Passport:
+
+   ```bash
+   composer require laravel/passport
+
+2. Run the Passport installation command:
+
+    ```bash
+    php artisan passport:install
+
+3. Add Passport Keys:
+
+    ```bash
+   php artisan passport:keys
+
+4. Vendor Publish:
+
+    ```bash
+   php artisan vendor:publish --tag=passport-config
+
+### API Endpoints
+
+
+Here are the API endpoints provided by the project:
+
+#### User Registration
+
+- Endpoint: `POST /api/v1/register`
+- Description: Register a new user and role can be user or admin.
+  - Request Body:
+  ```json
+    {
+        "name": "User Name",
+        "email": "user@example.com",
+        "password": "your_password",
+        "role": "user"
+    }
+    
+#### User Login
+
+- Endpoint: `POST /api/v1/login`
+- Description: Register a new user and role can be user or admin.
+  - Request Body:
+  ```json
+    {
+        "email": "user@example.com",
+        "password": "your_password"
+    }
+
+#### User Logout
+
+- Endpoint: `POST /api/v1/logout`
+- Description: Register a new user and role can be user or admin.
+- Authentication Required: Yes
+
+
+
+### Admin-Only Routes
+
+#### Delete Financial Transaction
+
+- Endpoint: `POST /api/v1/delete/transaction`
+- Description: Delete a financial transaction (Admin only).
+- Request Body:
+  ```json
+    {
+      "transaction_id" : 2
+    }
+  
+### User-Only Routes
+
+#### Create Financial Transaction
+
+- Endpoint: `POST /api/v1/create/transaction`
+- Description: Create a new financial transaction (User only).
+- Authentication Required: Yes (User)
+- Request Body:
+  ```json
+  {
+      "amount": 500,
+      "description": "Test Description"
+  }
+
+#### Get All User Transactions
+
+- Endpoint: `POST /api/v1/all-user-transactions`
+- Description: Get all financial transactions of the authenticated user (User only).
+- Authentication Required: Yes (User)
+- Response: List of user's financial transactions.
+
+##### Update Financial Transaction
+
+- Endpoint: `POST /api/v1/update/transaction`
+- Description: Update an existing financial transaction (User only).
+- Authentication Required: Yes (User)
+- Request Body:
+  ```json
+  {
+      "transaction_id": 123, // ID of the transaction to update
+      "amount": 600,
+      "description": "Updated Description"
+  }
+
+## Security Measures
+
+Here are the security measures implemented in the project to ensure the protection of user data and system integrity:
+
+### Authentication with Laravel Passport
+
+- **Importance:** Authentication ensures that only authorized users can access sensitive information or perform specific actions within the application. Passport provides a secure token-based authentication system that prevents unauthorized access.
+
+### Role-Based Authorization
+
+- **Importance:** Role-based authorization ensures that users can only access the parts of the application that are relevant to their role. Admins should have access to administrative features, while regular users should only be able to perform actions they are authorized for.
+
+### Route-Level Middleware
+
+- **Importance:** Route-level middleware helps prevent unauthorized users from accessing specific routes. By applying middleware, you can ensure that only users with the appropriate role can perform actions that are meant for them.
+
+### API Token Usage
+
+- **Importance:** API tokens allow users to authenticate without exposing their actual credentials. This minimizes the risk of credentials being intercepted or stolen during communication.
+
+### Request Validation and Error Handling
+
+- **Importance:** Proper error handling helps maintain the security and usability of the application. Providing informative error messages to users can prevent potential security breaches by guiding them towards correct usage.
+
+
